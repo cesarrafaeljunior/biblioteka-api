@@ -4,5 +4,11 @@ from rest_framework.views import View
 
 
 class IsCollaboratorOrOwner(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return request.user.is_collaborator or obj == request.user
+    def has_object_permission(self, request, view: View, obj: User) -> bool:
+        if request.user.is_authenticated and obj == request.user:
+            return True
+
+        if request.user.is_superuser:
+            return True
+
+        return False
