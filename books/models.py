@@ -23,11 +23,7 @@ class Book(models.Model):
 
 class Gender(models.Model):
     name = models.CharField(
-        max_length=50,
-        unique=True,
-        error_messages={
-            "unique": "This field must be unique.",
-        })
+        max_length=50,)
 
     def __repr__(self) -> str:
         return f"<Gender[{self.id}]: {self.name}>"
