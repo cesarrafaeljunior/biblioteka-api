@@ -13,3 +13,4 @@ class User(AbstractUser):
 
     is_collaborator = models.BooleanField(default=False)
     is_blocked = models.BooleanField(default=False)
+    unlock_date = models.DateField(default=None, null=True)

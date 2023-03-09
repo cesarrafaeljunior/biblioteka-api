@@ -32,5 +32,6 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "is_collaborator",
             "is_blocked",
+            "unlock_date",
         ]
         extra_kwargs = {"password": {"write_only": True}}
