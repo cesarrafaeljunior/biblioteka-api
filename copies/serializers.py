@@ -7,7 +7,10 @@ from datetime import timedelta
 
 
 class CopySerializer(serializers.ModelSerializer):
-    book = BookSerializer(read_only=True)
+    def create(self, validated_data: dict) -> Copy:
+        return Copy.objects.create(**validated_data)
+
+    book = serializers.SerializerMethodField()
 
     class Meta:
         model = Copy
@@ -17,6 +20,9 @@ class CopySerializer(serializers.ModelSerializer):
             "copies_avaliable",
             "book",
         ]
+
+    def get_book(self, obj) -> str:
+        return obj.book.title
 
 
 class LoanSerializer(serializers.ModelSerializer):
