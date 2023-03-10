@@ -23,9 +23,9 @@ class Loan(models.Model):
     date_devolution = models.DateField()
     is_receipt = models.BooleanField(default=False)
     price = models.IntegerField()
-    copy = models.ForeignKey(
+    user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="copy_borrowed"
     )
-    user = models.ForeignKey(
+    copy = models.ForeignKey(
         "copies.Copy", on_delete=models.CASCADE, related_name="user_copy_borrowed"
     )
