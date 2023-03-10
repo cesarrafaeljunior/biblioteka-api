@@ -1,4 +1,3 @@
-
 from rest_framework.urls import path
 from .views import LoanView, LoanDetailView, UserLoansView
 from django.urls import path
@@ -11,4 +10,3 @@ urlpatterns = [
     path("copies/", CopyCreatelView.as_view()),
     path("copies/<int:copy_id>/", CopyDateilView.as_view()),
 ]
-
