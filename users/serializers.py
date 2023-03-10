@@ -4,6 +4,12 @@ from users.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> User:
+        try:
+            validated_data["is_collaborator"] == True
+            validated_data["is_superuser"] = True
+        except:
+            ...
+
         return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
@@ -30,6 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "first_name",
             "last_name",
+            "is_superuser",
             "is_collaborator",
             "is_blocked",
             "unlock_date",

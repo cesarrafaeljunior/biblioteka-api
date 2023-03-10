@@ -1,12 +1,39 @@
 from .models import Loan, Copy
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
-from .serializers import LoanSerializer
+from .serializers import LoanSerializer, CopySerializer
 from .permicions import IsCollaboratorOrReadOnly, IsColaborator
 from users.models import User
 from django.shortcuts import get_object_or_404
 from datetime import date, timedelta
 from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.views import Request, Response, status
+from .permitions import IsAdmAuthentication
+from books.models import Book
+
+
+class CopyCreatelView(generics.CreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdmAuthentication]
+
+    queryset = Copy.objects.all()
+    serializer_class = CopySerializer
+
+    def perform_create(self, serializer):
+        book = self.request.data.pop("book")
+        book_obj = get_object_or_404(Book, id=book)
+
+        serializer.save(book=book_obj)
+
+
+class CopyDateilView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdmAuthentication]
+
+    lookup_url_kwarg = "copy_id"
+
+    queryset = Copy.objects.all()
+    serializer_class = CopySerializer
 
 
 class LoanView(generics.ListCreateAPIView):
@@ -93,3 +120,4 @@ class UserLoansView(generics.ListAPIView):
 
     def get_queryset(self):
         return Loan.objects.filter(user=self.kwargs.get("pk"))
+
