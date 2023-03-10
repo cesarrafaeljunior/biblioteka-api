@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
             validated_data["is_superuser"] = True
         except:
             ...
-
+        # if "is_collaborator" in validated_data.keys() and validated_data["is_collaborator"] == True:
         return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
