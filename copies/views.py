@@ -66,11 +66,21 @@ class LoanDetailView(generics.UpdateAPIView):
 
         if loan_obj.user.is_blocked:
             loan_obj.user.is_blocked = False
-            loan_obj.unlock_date = date.today()
+            loan_obj.user.unlock_date = date.today()
 
         loan_obj.is_receipt = True
 
         loan_obj.save()
+
+        user_loans = Loan.objects.filter(user=loan_obj.user.id, is_receipt=False)
+
+        for iten in user_loans:
+
+            if iten.date_devolution < date.today():
+                loan_obj.user.is_blocked = True
+                loan_obj.user.unlock_date = None
+
+                loan_obj.user.save()
 
         return loan_obj
 
