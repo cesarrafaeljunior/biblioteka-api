@@ -2,7 +2,7 @@ from .models import Loan, Copy
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
 from .serializers import LoanSerializer, CopySerializer
-from .permicions import IsCollaboratorOrReadOnly, IsColaborator
+from .permitions import IsCollaboratorOrReadOnly, IsColaborator
 from users.models import User
 from django.shortcuts import get_object_or_404
 from datetime import date, timedelta

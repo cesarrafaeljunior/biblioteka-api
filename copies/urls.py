@@ -10,5 +10,5 @@ urlpatterns = [
     path("user/loans/<int:pk>/", UserLoansView.as_view()),
     path("copies/", CopyCreatelView.as_view()),
     path("copies/<int:copy_id>/", CopyDateilView.as_view()),
-
+]
 
