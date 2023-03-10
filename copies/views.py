@@ -2,14 +2,16 @@ from .models import Loan, Copy
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import generics
 from .serializers import LoanSerializer, CopySerializer
-from .permicions import IsCollaboratorOrReadOnly, IsColaborator
+from .permitions import IsCollaboratorOrReadOnly, IsColaborator
 from users.models import User
 from django.shortcuts import get_object_or_404
 from datetime import date, timedelta
-from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.exceptions import PermissionDenied, NotFound, ParseError
 from rest_framework.views import Request, Response, status
 from .permitions import IsAdmAuthentication
 from books.models import Book
+
+import ipdb
 
 
 class CopyCreatelView(generics.CreateAPIView):
@@ -91,13 +93,16 @@ class LoanDetailView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         loan_obj = get_object_or_404(Loan, id=self.kwargs.get("pk"))
 
+        if loan_obj.is_receipt == True:
+            raise ParseError("This book has already been returned.")
+
         if loan_obj.user.is_blocked:
             loan_obj.user.is_blocked = False
             loan_obj.user.unlock_date = date.today()
 
-        loan_obj.is_receipt = True
+        loan_obj.copy.copies_avaliable += 1
 
-        loan_obj.save()
+        loan_obj.copy.save()
 
         user_loans = Loan.objects.filter(user=loan_obj.user.id, is_receipt=False)
 
@@ -109,7 +114,9 @@ class LoanDetailView(generics.UpdateAPIView):
 
                 loan_obj.user.save()
 
-        return loan_obj
+        serializer.save(is_receipt=True)
+
+        return Response(serializer.data)
 
 
 class UserLoansView(generics.ListAPIView):
@@ -120,4 +127,3 @@ class UserLoansView(generics.ListAPIView):
 
     def get_queryset(self):
         return Loan.objects.filter(user=self.kwargs.get("pk"))
-
