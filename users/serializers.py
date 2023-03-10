@@ -4,24 +4,20 @@ from users.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> User:
-        try:
-            validated_data["is_collaborator"] == True
+
+        if "is_collaborator" in validated_data.keys() and validated_data["is_collaborator"]:
             validated_data["is_superuser"] = True
-        except:
-            ...
-        # if "is_collaborator" in validated_data.keys() and validated_data["is_collaborator"] == True:
+
         return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
-        try:
-            password = validated_data.pop("password")
-            instance.set_password(password)
-
-        except:
-            ...
+        password = validated_data.pop("password", None)
 
         for key, value in validated_data.items():
             setattr(instance, key, value)
+
+        if password:
+            instance.set_password(password)
 
         instance.save()
 
