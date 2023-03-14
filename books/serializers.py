@@ -1,19 +1,51 @@
 from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 from books.models import Book, Gender
+from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 
 
 class GenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gender
-        fields = [
-            "id",
-            "name"
-        ]
+        fields = ["id", "name"]
 
 
+@extend_schema_serializer(
+    examples=[
+        OpenApiExample(
+            "User Serializer",
+            summary="Criação de books",
+            description="Rota para criação de books",
+            value={
+                "title": "O Pequeno Príncipe",
+                "author": "Antoine de Saint-Exupéry",
+                "description": "O pequeno príncipe é um dos maiores clássicos da literatura francesa.",
+                "pages": 50,
+                "book_genders": [{"name": "Ficção Francesa"}],
+            },
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            "User Serializer",
+            value={
+                "id": 1,
+                "title": "O Pequeno Príncipe",
+                "author": "Antoine de Saint-Exupéry",
+                "description": "O pequeno príncipe é um dos maiores clássicos da literatura francesa.",
+                "pages": 50,
+                "book_genders": [{"name": "Ficção Francesa"}],
+                "followers": [
+                    {"id": 1, "username": "João", "email": "joão@dev.com"},
+                    {"id": 2, "username": "Pedrinho", "email": "Pedrinho@dev.com"},
+                ],
+            },
+            request_only=False,
+            response_only=True,
+        ),
+    ]
+)
 class BookSerializer(serializers.ModelSerializer):
-
     book_genders = GenderSerializer(many=True)
 
     def create(self, validated_data: dict) -> Book:
@@ -44,6 +76,6 @@ class BookSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "followers",
-            "book_genders"
+            "book_genders",
         ]
         depth = 1
