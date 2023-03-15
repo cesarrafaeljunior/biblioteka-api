@@ -93,7 +93,7 @@ class LoanDetailView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         loan_obj = get_object_or_404(Loan, id=self.kwargs.get("pk"))
 
-        if loan_obj.is_receipt == True:
+        if loan_obj.is_receipt:
             raise ParseError("This book has already been returned.")
 
         if loan_obj.user.is_blocked:
