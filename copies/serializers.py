@@ -10,15 +10,15 @@ from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 @extend_schema_serializer(
     examples=[
         OpenApiExample(
-            "User Serializer",
-            summary="Criação de usuarios",
-            description="Rota para criação de usuarios",
+            "Copies Serializer",
+            summary="Criação de copias",
+            description="Rota para criação de copias",
             value={"ammounts_of_copies": 100, "copies_avaliable": 100, "book": 1},
             request_only=True,
             response_only=False,
         ),
         OpenApiExample(
-            "User Serializer",
+            "Copies Serializer",
             value={
                 "id": 1,
                 "ammounts_of_copies": 100,
@@ -59,22 +59,22 @@ class CopySerializer(serializers.ModelSerializer):
 @extend_schema_serializer(
     examples=[
         OpenApiExample(
-            "User Serializer",
-            summary="Criação de usuarios",
-            description="Rota para criação de usuarios",
-            value={"is_receipt": False, "price": 25, "copy": 100, "user": 1},
+            "Loans Serializer",
+            summary="Criação de emprestimos",
+            description="Rota para criação de emprestimos",
+            value={"price": 25, "copy": 1, "user": 1},
             request_only=True,
             response_only=False,
         ),
         OpenApiExample(
-            "User Serializer",
+            "Loans Serializer",
             value={
                 "id": 0,
                 "date_receipt": "2023-03-14",
                 "date_devolution": "2023-03-14",
                 "is_receipt": False,
                 "price": 25,
-                "copy": 100,
+                "copy": 1,
                 "user": 1,
             },
             request_only=False,
@@ -100,9 +100,9 @@ class LoanSerializer(serializers.ModelSerializer):
         get_date_devolution = date.today() + timedelta(days=10)
 
         if get_date_devolution.weekday() == 5:
-            return get_date_devolution + timedelta(days=2)
+            get_date_devolution += timedelta(days=2)
         elif get_date_devolution == 6:
-            return get_date_devolution + timedelta(days=1)
+            get_date_devolution += timedelta(days=1)
 
         validated_data["date_devolution"] = get_date_devolution
 
