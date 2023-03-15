@@ -1,11 +1,50 @@
 from rest_framework import serializers
 from users.models import User
 
+from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 
+
+@extend_schema_serializer(
+    examples=[
+        OpenApiExample(
+            "User Serializer",
+            summary="Criação de usuarios",
+            description="Rota para criação de usuarios",
+            value={
+                "username": "João",
+                "email": "joao@dev.com",
+                "password": "Senha123",
+                "first_name": "Nome",
+                "last_name": "Sobrenome",
+                "is_collaborator": False,
+            },
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            "User Serializer",
+            value={
+                "id": 1,
+                "username": "João",
+                "email": "joao@dev.com",
+                "password": "Senha123",
+                "first_name": "Nome",
+                "last_name": "Sobrenome",
+                "is_superuser": False,
+                "is_collaborator": False,
+                "is_blocked": None,
+            },
+            request_only=False,
+            response_only=True,
+        ),
+    ]
+)
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> User:
-
-        if "is_collaborator" in validated_data.keys() and validated_data["is_collaborator"]:
+        if (
+            "is_collaborator" in validated_data.keys()
+            and validated_data["is_collaborator"]
+        ):
             validated_data["is_superuser"] = True
 
         return User.objects.create_user(**validated_data)

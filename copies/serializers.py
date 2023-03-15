@@ -4,8 +4,39 @@ from books.serializers import BookSerializer
 from .models import Copy
 from .models import Loan
 from datetime import date, timedelta
+from drf_spectacular.utils import extend_schema_serializer, OpenApiExample
 
 
+@extend_schema_serializer(
+    examples=[
+        OpenApiExample(
+            "User Serializer",
+            summary="Criação de usuarios",
+            description="Rota para criação de usuarios",
+            value={"ammounts_of_copies": 100, "copies_avaliable": 100, "book": 1},
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            "User Serializer",
+            value={
+                "id": 1,
+                "ammounts_of_copies": 100,
+                "copies_avaliable": 100,
+                "book": {
+                    "id": 1,
+                    "title": "O Pequeno Príncipe",
+                    "author": "Antoine de Saint-Exupéry",
+                    "description": "O pequeno príncipe é um dos maiores clássicos da literatura francesa.",
+                    "pages": 50,
+                    "book_genders": [{"name": "Ficção Francesa"}],
+                },
+            },
+            request_only=False,
+            response_only=True,
+        ),
+    ]
+)
 class CopySerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> Copy:
         return Copy.objects.create(**validated_data)
@@ -25,6 +56,32 @@ class CopySerializer(serializers.ModelSerializer):
         return obj.book.title
 
 
+@extend_schema_serializer(
+    examples=[
+        OpenApiExample(
+            "User Serializer",
+            summary="Criação de usuarios",
+            description="Rota para criação de usuarios",
+            value={"is_receipt": False, "price": 25, "copy": 100, "user": 1},
+            request_only=True,
+            response_only=False,
+        ),
+        OpenApiExample(
+            "User Serializer",
+            value={
+                "id": 0,
+                "date_receipt": "2023-03-14",
+                "date_devolution": "2023-03-14",
+                "is_receipt": False,
+                "price": 25,
+                "copy": 100,
+                "user": 1,
+            },
+            request_only=False,
+            response_only=True,
+        ),
+    ]
+)
 class LoanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Loan
