@@ -43,13 +43,6 @@ Mapeando principais tecnologias do projeto
 
 - **[drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/)**
 
-## 2. Diagrama ER
-[ Voltar ao topo ](#tabela-de-conteúdos)
-
-- **[Diagrama](https://imgur.com/a/bDhkxqV)**
-
-Diagrama ER representando as relções entre tabelas no banco de dados.
-
 ## 3. Documentação
 [ Voltar ao topo ](#tabela-de-conteúdos)
 
