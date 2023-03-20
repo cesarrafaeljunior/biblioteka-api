@@ -10,6 +10,10 @@
 
 - [Rodando localmente](#4-rodando-localmente)
 
+URL base da aplicação:
+
+https://biblioteka.onrender.com/
+
 ## 1. Visão Geral
 Mapeando principais tecnologias do projeto
 
@@ -22,11 +26,6 @@ Mapeando principais tecnologias do projeto
 - **[Generic Views](https://docs.djangoproject.com/en/4.1/topics/class-based-views/generic-display/)**
 
 - **[drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/)**
-
-
-URL base da aplicação:
-
-https://biblioteka.onrender.com/
 
 ## 2. Diagrama ER
 [ Voltar ao topo ](#tabela-de-conteúdos)
