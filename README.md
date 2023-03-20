@@ -1,13 +1,3 @@
-<h1 align="center">
-  BiblioteKA - API
-</h1>
-
-<p align = "center">
-A api BiblioteKA é uma api de gerenciamento de empréstimos de livros para bibliotecas, a api conta com 2 tipos de usuários, sendo eles colaboradores e estudantes.
-</p>
-
-<img src="https://i.imgur.com/ehNZ9nw.png"/>
-
 ## Tabela de Conteúdos
 
 - [Visão Geral](#1-visão-geral)
@@ -17,6 +7,24 @@ A api BiblioteKA é uma api de gerenciamento de empréstimos de livros para bibl
 - [Documentação](#3-documentação)
 
 - [Rodando localmente](#4-rodando-localmente)
+
+<h1 align="center">
+  BiblioteKA - API
+</h1>
+
+<p align = "center">
+A api BiblioteKA é uma api de gerenciamento de empréstimos de livros para bibliotecas, a api conta com 2 tipos de usuários, sendo eles colaboradores e estudantes.
+</p>
+
+### Colaboradores:
+<p>Usuários colaboradores, poderão cadastrar novos livros na aplicação, editá-los e deletá-los, apenas colaboradores poderão também, adicionar cópias a determinado livro, poderá também emprestar estes livros aos estudantes, consultar o históricos de empréstimo de algum determinado estudante, alterar o estado de entrega de um livro emprestado.</p>
+
+### Estudantes:
+<p>Usuários estudantes, poderão listar seu próprio histórico de empréstimo, buscar todos os livros cadastrados no app e buscar informações de um determinado livro.
+
+ ## Diagrama utilizado para a construção da api
+
+<img src="https://i.imgur.com/ehNZ9nw.png"/>
 
 URL base da aplicação:
 
