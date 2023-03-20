@@ -1,4 +1,12 @@
-# Documentação da API (Biblioteka)
+<h1 align="center">
+  BiblioteKA - API
+</h1>
+
+<p align = "center">
+A api BiblioteKA é uma api de gerenciamento de empréstimos de livros para bibliotecas, a api conta com 2 tipos de usuários, sendo eles colaboradores e estudantes.
+</p>
+
+<img src="https://i.imgur.com/ehNZ9nw.png"/>
 
 ## Tabela de Conteúdos
 
